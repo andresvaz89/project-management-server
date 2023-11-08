@@ -7,6 +7,14 @@ const router = require('express').Router();
 const Project = require('../models/Project.model');
 const Task = require('../models/Task.model');
 
+// GET /api/projects -  Retrieves all of the projects
+router.get('/projects', (req, res, next) => {
+  Project.find()
+    .populate('tasks')
+    .then((allProjects) => res.json(allProjects))
+    .catch((err) => res.json(err));
+});
+
 //  POST /api/projects  -  Creates a new project
 router.post('/projects', (req, res, next) => {
   const { title, description } = req.body;
